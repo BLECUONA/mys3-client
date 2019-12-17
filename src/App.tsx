@@ -4,53 +4,64 @@ import {
   Route,
   Link as RouterLink
 } from "react-router-dom";
-import SignIn from "./SignIn";
-import Home from "./Home";
-import { AppBar, Toolbar, Typography, Button, Tab, IconButton, ButtonGroup } from "@material-ui/core";
+import { Routes } from "./utils/Routes";
+import * as Screens from "./screens";
+import { AppBar, Toolbar, Typography, Button, Tab, IconButton, ButtonGroup, createMuiTheme, ThemeProvider } from "@material-ui/core";
 import HomeIcon from '@material-ui/icons/Home';
 import { makeStyles } from '@material-ui/core/styles';
 
 const LinkComponent = (props: any) => <RouterLink {...props} />;
 
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+});
+
 const App: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <Router>
+    <ThemeProvider theme={theme}>
+      <Router>
 
-      {/* <AppBar position="static" color="default" elevation={0} className={classes.appBar}> */}
-      <AppBar position="static" elevation={0} >
-        {/* <Toolbar className={classes.toolbar}> */}
-        <Toolbar >
-          <IconButton color="inherit" noWrap className={classes.leftToolbar} component={LinkComponent} to={"/"}>
-            {/* <Button color="inherit" noWrap component={LinkComponent} to={"/"}> */}
-            <HomeIcon />
-          </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.centerTitleToolbar}>
-            My S3
+        {/* <AppBar position="static" color="default" elevation={0} className={classes.appBar}> */}
+        <AppBar position="static" elevation={0} >
+          {/* <Toolbar className={classes.toolbar}> */}
+          <Toolbar >
+            <IconButton color="inherit" noWrap className={classes.leftToolbar} component={LinkComponent} to={Routes.Home}>
+              {/* <Button color="inherit" noWrap component={LinkComponent} to={"/"}> */}
+              <HomeIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" className={classes.centerTitleToolbar}>
+              My S3
           </Typography>
-          <ButtonGroup color="inherit">
-            <Button component={LinkComponent} to={"/sign-in"}>
-            {/* <Button color="inherit" variant="outlined" className={classes.rightToolbar} component={LinkComponent} to={"/sign-in"}> */}
-              Sign in
+            <ButtonGroup color="inherit">
+              <Button component={LinkComponent} to={Routes.SignIn}>
+                {/* <Button color="inherit" variant="outlined" className={classes.rightToolbar} component={LinkComponent} to={"/sign-in"}> */}
+                Sign in
             </Button>
-            <Button component={LinkComponent} to={"/sign-up"}>
-            {/* <Button color="inherit" variant="outlined" className={classes.rightToolbar} component={LinkComponent} to={"/sign-up"}> */}
-              Sign up
+              <Button component={LinkComponent} to={Routes.SignUp}>
+                {/* <Button color="inherit" variant="outlined" className={classes.rightToolbar} component={LinkComponent} to={"/sign-up"}> */}
+                Sign up
             </Button>
-          </ButtonGroup>
-        </Toolbar>
-      </AppBar>
+            </ButtonGroup>
+          </Toolbar>
+        </AppBar>
 
-      {/* Routes */}
-      <Route exact path="/">
-        <Home />
-      </Route>
-      <Route exact path="/sign-in">
-        <SignIn />
-      </Route>
+        {/* Routes */}
+        <Route exact path={Routes.Home}>
+          <Screens.Home />
+        </Route>
+        <Route exact path={Routes.SignIn}>
+          <Screens.SignIn />
+        </Route>
+        <Route exact path={Routes.SignUp}>
+          <Screens.SignUp />
+        </Route>
 
-    </Router>
+      </Router>
+    </ThemeProvider>
   )
 }
 
