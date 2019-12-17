@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Link as RouterLink
+  Link as RouterLink,
+  Redirect
 } from "react-router-dom";
 import { Routes } from "./utils/Routes";
 import * as Screens from "./screens";
 import { AppBar, Toolbar, Typography, Button, Tab, IconButton, ButtonGroup, createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
 import HomeIcon from '@material-ui/icons/Home';
 import { makeStyles } from '@material-ui/core/styles';
-require('dotenv').config();
-
+import { Items } from "./utils/localStorageItems";
 const LinkComponent = (props: any) => <RouterLink {...props} />;
 
 const theme = createMuiTheme({
@@ -22,37 +22,67 @@ const theme = createMuiTheme({
 const App: React.FC = () => {
   const classes = useStyles();
 
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router>
-        {/* <AppBar position="static" color="default" elevation={0} className={classes.appBar}> */}
-        <AppBar position="static" elevation={0} >
-          {/* <Toolbar className={classes.toolbar}> */}
-          <Toolbar >
-            <IconButton color="inherit" noWrap className={classes.leftToolbar} component={LinkComponent} to={Routes.Home}>
-              {/* <Button color="inherit" noWrap component={LinkComponent} to={"/"}> */}
-              <HomeIcon />
-            </IconButton>
-            <Typography variant="h6" color="inherit" className={classes.centerTitleToolbar}>
-              My S3
-          </Typography>
+  const [isConnected, setIsConnected] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsConnected(localStorage.getItem(Items.token) != null);
+  })
+
+  const _logOut = () => {
+    localStorage.clear();
+    setIsConnected(false)
+  }
+
+  // RENDERS
+  const _renderAppBar = () => {
+    return (
+      <AppBar position="static" elevation={0} >
+        {/* <Toolbar className={classes.toolbar}> */}
+        <Toolbar >
+          <IconButton color="inherit" noWrap className={classes.leftToolbar} component={LinkComponent} to={Routes.Home}>
+            {/* <Button color="inherit" noWrap component={LinkComponent} to={"/"}> */}
+            <HomeIcon />
+          </IconButton>
+          <Typography variant="h6" color="inherit" className={classes.centerTitleToolbar}>
+            My S3
+      </Typography>
+          {!isConnected &&
             <ButtonGroup color="inherit">
               <Button component={LinkComponent} to={Routes.SignIn}>
                 {/* <Button color="inherit" variant="outlined" className={classes.rightToolbar} component={LinkComponent} to={"/sign-in"}> */}
                 Sign in
-            </Button>
+              </Button>
               <Button component={LinkComponent} to={Routes.SignUp}>
                 {/* <Button color="inherit" variant="outlined" className={classes.rightToolbar} component={LinkComponent} to={"/sign-up"}> */}
                 Sign up
-            </Button>
+              </Button>
             </ButtonGroup>
-          </Toolbar>
-        </AppBar>
+          }
+          {isConnected &&
+            <Button component={LinkComponent}
+              to={Routes.Home}
+              onClick={_logOut}
+            >
+              Log out
+            </Button>
 
-        {/* Routes */}
+          }
+        </Toolbar>
+      </AppBar>
+    )
+  }
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+
+        {/* RENDERS */}
+        {_renderAppBar()}
+
+        {/* ROUTES */}
         <Route exact path={Routes.Home}>
-          <Screens.Home />
+          {isConnected ? <Redirect to={Routes.Dashboard} /> : <Screens.Home />}
         </Route>
         <Route exact path={Routes.SignIn}>
           <Screens.SignIn />
@@ -61,7 +91,7 @@ const App: React.FC = () => {
           <Screens.SignUp />
         </Route>
         <Route exact path={Routes.Dashboard}>
-          <Screens.Dashboard />
+          {isConnected ? <Screens.Dashboard /> : <Redirect to={Routes.Home} />}
         </Route>
 
       </Router>

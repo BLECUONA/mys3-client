@@ -14,6 +14,7 @@ import Container from '@material-ui/core/Container';
 import commonStyles from "../utils/CommonStyles";
 import { apiMys3Domain, apiMys3Pages } from "../utils/ApiUrls";
 import { User, Response } from "../utils/@types/apiMyS3";
+import { Items } from '../utils/localStorageItems';
 
 function Copyright() {
   return (
@@ -75,14 +76,13 @@ const SignUp: React.FC = () => {
         const jsonRes: Response = await res.json();
 
         if (res.status == 201) {
-          const { nickname, password, uuid } = jsonRes.data.user;
-          localStorage.setItem("token", jsonRes.meta.token);
-          localStorage.setItem("nickname", nickname);
-          localStorage.setItem("password", password);
-          localStorage.setItem("uuid", uuid as unknown as string);
+          const { nickname, uuid } = jsonRes.data.user;
+          localStorage.setItem(Items.token, jsonRes.meta.token);
+          localStorage.setItem(Items.nickname, nickname);
+          localStorage.setItem(Items.uuid, uuid as unknown as string);
           setError(false);
           setToDashboard(true);
-      }
+        }
         else {
           console.log(`ERR : ${jsonRes.error}`);
           setError(true);
@@ -94,9 +94,8 @@ const SignUp: React.FC = () => {
       })
   }
 
+  // RENDERS
   const _renderFormSignUp = () => {
-    console.log("ENV: ", process.env.ENV)
-    console.log("ENV2: ", process.env.NODE_ENV)
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
