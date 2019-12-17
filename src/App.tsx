@@ -6,9 +6,10 @@ import {
 } from "react-router-dom";
 import { Routes } from "./utils/Routes";
 import * as Screens from "./screens";
-import { AppBar, Toolbar, Typography, Button, Tab, IconButton, ButtonGroup, createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { AppBar, Toolbar, Typography, Button, Tab, IconButton, ButtonGroup, createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
 import HomeIcon from '@material-ui/icons/Home';
 import { makeStyles } from '@material-ui/core/styles';
+require('dotenv').config();
 
 const LinkComponent = (props: any) => <RouterLink {...props} />;
 
@@ -23,8 +24,8 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Router>
-
         {/* <AppBar position="static" color="default" elevation={0} className={classes.appBar}> */}
         <AppBar position="static" elevation={0} >
           {/* <Toolbar className={classes.toolbar}> */}
@@ -58,6 +59,9 @@ const App: React.FC = () => {
         </Route>
         <Route exact path={Routes.SignUp}>
           <Screens.SignUp />
+        </Route>
+        <Route exact path={Routes.Dashboard}>
+          <Screens.Dashboard />
         </Route>
 
       </Router>
