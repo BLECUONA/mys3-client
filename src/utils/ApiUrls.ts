@@ -5,9 +5,9 @@ export enum apiMys3Pages {
 };
 
 export const apiMys3Domain = (
-    (process.env.NODE_ENV == "production")
+    (process.env.REACT_APP_ENV == "production")
         ? "https://git.heroku.com/mys3.git"
-        : (process.env.NODE_ENV == "development")
+        : (process.env.REACT_APP_ENV == "development")
             ? "http://localhost:4000"
             : "https://git.heroku.com/mys3dev.git"
 )
