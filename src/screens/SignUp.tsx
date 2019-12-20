@@ -31,7 +31,11 @@ function Copyright() {
 
 const LinkComponent = (props: any) => <RouterLink {...props} />;
 
-const SignUp: React.FC = () => {
+interface Props {
+  setIsConnectedInParent: any,
+}
+
+const SignUp: React.FC<Props> = (props) => {
   const classes = commonStyles();
 
   // HOOKS FOR INPUTS
@@ -81,6 +85,7 @@ const SignUp: React.FC = () => {
           localStorage.setItem(Items.nickname, nickname);
           localStorage.setItem(Items.uuid, uuid as unknown as string);
           setError(false);
+          props.setIsConnectedInParent(true);
           setToDashboard(true);
         }
         else {

@@ -4,7 +4,7 @@ export enum apiMys3Pages {
     SignIn = "/api/auth/signin/"
 };
 
-export const apiMys3Domain = (
+export const apiMys3Domain: string = (
     (process.env.REACT_APP_ENV == "production")
         ? "https://mys3.herokuapp.com"
         : (process.env.REACT_APP_ENV == "development")

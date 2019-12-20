@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -23,6 +23,10 @@ const App: React.FC = () => {
   const classes = useStyles();
 
   const [isConnected, setIsConnected] = useState<boolean>(false);
+
+  const updateIsConnectedFromChild = (value: boolean) => {
+    setIsConnected(value);
+  }
 
   useEffect(() => {
     setIsConnected(localStorage.getItem(Items.token) != null);
@@ -85,10 +89,10 @@ const App: React.FC = () => {
           {isConnected ? <Redirect to={Routes.Dashboard} /> : <Screens.Home />}
         </Route>
         <Route exact path={Routes.SignIn}>
-          <Screens.SignIn />
+          <Screens.SignIn setIsConnectedInParent={updateIsConnectedFromChild} />
         </Route>
         <Route exact path={Routes.SignUp}>
-          <Screens.SignUp />
+          <Screens.SignUp setIsConnectedInParent={updateIsConnectedFromChild} />
         </Route>
         <Route exact path={Routes.Dashboard}>
           {isConnected ? <Screens.Dashboard /> : <Redirect to={Routes.Home} />}
