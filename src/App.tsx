@@ -11,6 +11,7 @@ import { AppBar, Toolbar, Typography, Button, Tab, IconButton, ButtonGroup, crea
 import HomeIcon from '@material-ui/icons/Home';
 import { makeStyles } from '@material-ui/core/styles';
 import { Items } from "./utils/localStorageItems";
+import MenuAccount from "./components/MenuAccount";
 const LinkComponent = (props: any) => <RouterLink {...props} />;
 
 const theme = createMuiTheme({
@@ -32,9 +33,14 @@ const App: React.FC = () => {
     setIsConnected(localStorage.getItem(Items.token) != null);
   })
 
-  const _logOut = () => {
+  const logOut = () => {
     localStorage.clear();
     setIsConnected(false)
+  }
+
+  const deleteAccount = () => {
+    // TODO call api
+    logOut();
   }
 
   // RENDERS
@@ -63,13 +69,7 @@ const App: React.FC = () => {
             </ButtonGroup>
           }
           {isConnected &&
-            <Button component={LinkComponent}
-              to={Routes.Home}
-              onClick={_logOut}
-            >
-              Log out
-            </Button>
-
+            <MenuAccount logOut={logOut} deleteAccount={deleteAccount}/>
           }
         </Toolbar>
       </AppBar>
