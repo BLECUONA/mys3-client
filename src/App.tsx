@@ -12,6 +12,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import { makeStyles } from '@material-ui/core/styles';
 import { Items } from "./utils/localStorageItems";
 import MenuAccount from "./components/MenuAccount";
+
 const LinkComponent = (props: any) => <RouterLink {...props} />;
 
 const theme = createMuiTheme({

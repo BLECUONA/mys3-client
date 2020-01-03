@@ -10,7 +10,7 @@ interface Props {
 
 const DropZoneArea: React.FC<Props> = (props) => {
 
-    const [files, setFiles] = useState([]);
+    const [files, setFiles] = useState<File[]>([]);
     const [open, setOpen] = useState<boolean>(false);
 
     // useEffect(() => {
@@ -26,7 +26,7 @@ const DropZoneArea: React.FC<Props> = (props) => {
         setOpen(false);
     }
 
-    const _handleSave = (files: any) => {
+    const _handleSave = (files: File[]) => {
         setFiles(files)
         _handleClose();
     }

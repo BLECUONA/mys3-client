@@ -9,7 +9,7 @@ import { MenuItem } from '@material-ui/core';
 
 interface Props {
     textButton: string;
-    actionYes?: any;
+    actionYes?: () => void;
     textTitle: string;
     textDialog: string;
     textYes: string;
@@ -27,8 +27,8 @@ const MenuItemWithDialog: React.FC<Props> = (props) => {
         setOpen(false);
     };
 
-    const handleYes = (cbYes: any) => {
-        cbYes();
+    const handleYes = (cb?: (() => void)) => {
+        if (cb) cb();
         handleClose();
     }
 
