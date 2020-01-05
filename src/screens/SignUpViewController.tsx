@@ -6,6 +6,7 @@ import { apiMys3Domain, apiMys3Pages } from "../res/ApiUrls";
 import { User, Response } from "../res/@types/apiMyS3";
 import { Items } from '../res/localStorageItems';
 import SignUpView from './SignUpView'
+import {SignUp as FetchSignUp} from '../services/apiMys3Services';
 
 const LinkComponent = (props: any) => <RouterLink {...props} />;
 
@@ -36,44 +37,23 @@ const SignUp: React.FC<Props> = (props) => {
 
   // API CALL
   const _fetchApiS3 = () => {
-    console.log("Fetchin API ...");
     let userToRegister: User = { nickname, password, email };
+    FetchSignUp(userToRegister, fetchRes, fetchErr);
+  } 
 
-    const options: RequestInit = {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        nickname: userToRegister.nickname,
-        email: userToRegister.email,
-        password: userToRegister.password
-      })
-    };
+  const fetchRes = (response: Response) => {
+    const { nickname, uuid } = response.data.user;
+    localStorage.setItem(Items.token, response.meta.token);
+    localStorage.setItem(Items.nickname, nickname);
+    localStorage.setItem(Items.uuid, uuid as unknown as string);
+    setError(false);
+    props.setIsConnectedInParent(true);
+    setToDashboard(true);
+  }
 
-    fetch(
-      `${apiMys3Domain}${apiMys3Pages.SignUp}`,
-      options
-    )
-      .then(async res => {
-        const jsonRes: Response = await res.json();
-
-        if (res.status == 201) {
-          const { nickname, uuid } = jsonRes.data.user;
-          localStorage.setItem(Items.token, jsonRes.meta.token);
-          localStorage.setItem(Items.nickname, nickname);
-          localStorage.setItem(Items.uuid, uuid as unknown as string);
-          setError(false);
-          props.setIsConnectedInParent(true);
-          setToDashboard(true);
-        }
-        else {
-          console.log(`ERR : ${jsonRes.error}`);
-          setError(true);
-        }
-      })
-      .catch(err => {
-        console.log(`ERR : ${err}`);
-        setError(true);
-      })
+  const fetchErr = (err: Error) => {
+    console.log(`ERR : ${err}`);
+    setError(true);
   }
 
   const RedirectToExistingAccount = () => {
