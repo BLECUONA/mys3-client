@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link as RouterLink, Redirect } from "react-router-dom";
-import { Routes } from "../utils/Routes"
+import { Routes } from "../res/Routes"
 import Link from '@material-ui/core/Link';
-import { apiMys3Domain, apiMys3Pages } from "../utils/ApiUrls";
-import { User, Response } from "../utils/@types/apiMyS3";
-import { Items } from '../utils/localStorageItems';
+import { apiMys3Domain, apiMys3Pages } from "../res/ApiUrls";
+import { User, Response } from "../res/@types/apiMyS3";
+import { Items } from '../res/localStorageItems';
 import SignUpView from './SignUpView'
 
 const LinkComponent = (props: any) => <RouterLink {...props} />;

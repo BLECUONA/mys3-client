@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Items } from '../utils/localStorageItems';
+import { Items } from '../res/localStorageItems';
 import DashboardView from './DashboardView';
 
 const Dashboard: React.FC = () => {

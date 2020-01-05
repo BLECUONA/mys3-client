@@ -9,8 +9,9 @@ import { AppBar, Toolbar, Typography, Button, IconButton, ButtonGroup, CssBaseli
 import HomeIcon from '@material-ui/icons/Home';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuAccount from "./components/MenuAccount";
-import { Routes } from "./utils/Routes";
+import { Routes } from "./res/Routes";
 import * as Screens from "./screens";
+import dictionary from './res/dictionary.json';
 
 const LinkComponent = (props: any) => <RouterLink {...props} />;
 
@@ -24,7 +25,6 @@ interface Props {
 const MainView: React.FC<Props> = (props) => {
   const classes = useStyles();
 
-  // RENDERS
   const _renderAppBar = () => {
     return (
       <AppBar position="static" elevation={0} >
@@ -33,15 +33,15 @@ const MainView: React.FC<Props> = (props) => {
             <HomeIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" className={classes.centerTitleToolbar}>
-            My S3
-      </Typography>
+            {dictionary.headerTitle}
+          </Typography>
           {!props.isConnected &&
             <ButtonGroup color="inherit">
               <Button component={LinkComponent} to={Routes.SignIn}>
-                Sing in
+                {dictionary.signInText}
               </Button>
               <Button component={LinkComponent} to={Routes.SignUp}>
-                Sign up
+                {dictionary.signUpText}
               </Button>
             </ButtonGroup>
           }

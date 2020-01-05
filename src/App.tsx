@@ -1,6 +1,5 @@
 import React from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
-
 import MainViewController from './MainViewController';
 
 const theme = createMuiTheme({

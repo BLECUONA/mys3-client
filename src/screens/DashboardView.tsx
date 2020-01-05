@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles, Grid } from '@material-ui/core';
+import dictionary from '../res/dictionary.json';
 
 interface Props {
     nickname: string | null;
@@ -9,7 +10,7 @@ const Dashboard: React.FC<Props> = (props) => {
     
     return (
         <Grid container className={classes.body}>
-            <h1>{`Welcome to your dashboard ${props.nickname?.toUpperCase()}`}</h1>
+            <h1>{`${dictionary.dashboardPageTitle} ${props.nickname?.toUpperCase()}`}</h1>
         </Grid>
     );
 }

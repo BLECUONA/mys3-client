@@ -9,7 +9,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IconButton } from '@material-ui/core';
 import { Link as RouterLink } from "react-router-dom";
-import { Routes } from "../utils/Routes"
+import { Routes } from "../res/Routes"
 import MenuItemWithDialog from './MenuItemWithDialog';
 
 const useStyles = makeStyles((theme: Theme) =>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Items } from "./utils/localStorageItems";
+import { Items } from "./res/localStorageItems";
 import MainView from './MainView';
 
 const MainViewController: React.FC = () => {

@@ -8,8 +8,9 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import commonStyles from "../utils/CommonStyles";
+import commonStyles from "../res/CommonStyles";
 import Copyright from '../components/CopyRight';
+import dictionary from '../res/dictionary.json';
 
 interface Props {
   setIsConnectedInParent: any;
@@ -35,7 +36,7 @@ const SignUpView: React.FC<Props> = (props) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          {dictionary.signUpText}
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
@@ -92,7 +93,7 @@ const SignUpView: React.FC<Props> = (props) => {
             className={classes.submit}
             onClick={props._fetchApiS3}
           >
-            Sign up
+            {dictionary.signUpText}
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
