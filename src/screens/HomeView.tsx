@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles, Grid } from '@material-ui/core';
 
-const Home: React.FC = () => {
+const HomeView: React.FC = () => {
     const classes = useStyles();
 
     return (
@@ -11,7 +11,7 @@ const Home: React.FC = () => {
     );
 }
 
-export default Home;
+export default HomeView;
 
 const useStyles = makeStyles(theme => ({
     body: {
