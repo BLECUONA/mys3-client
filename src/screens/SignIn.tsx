@@ -34,7 +34,7 @@ function Copyright() {
 const LinkComponent = (props: any) => <RouterLink {...props} />;
 
 interface Props {
-  setIsConnectedInParent: any,
+  setIsConnectedInParent: (isConnected: boolean) => void,
 }
 
 const SignIn: React.FC<Props> = (props) => {
@@ -144,10 +144,6 @@ const SignIn: React.FC<Props> = (props) => {
                   onChange={_handleEmailChange}
                   error={error}
                 />
-                {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -175,11 +171,6 @@ const SignIn: React.FC<Props> = (props) => {
               Sign In
           </Button>
             <Grid container>
-              {/* <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-              </Link>
-              </Grid> */}
               <Grid item>
                 <Link variant="body2" component={LinkComponent} to={Routes.SignUp}>
                   {"Don't have an account? Sign Up"}

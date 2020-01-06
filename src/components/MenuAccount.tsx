@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme: Theme) =>
 const LinkComponent = (props: any) => <RouterLink {...props} />;
 
 interface Props {
-    deleteAccount?: any; // TODO: voir si passer par props ou pas (déporter la fonction dans un fichier à part traitant l'api?)
-    logOut: any;
+    logOut: () => void;
+    deleteAccount: () => void; // TODO: voir si passer par props ou pas (déporter la fonction dans un fichier à part traitant l'api?)
 }
 
 const MenuAccount: React.FC<Props> = (props) => {

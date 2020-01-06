@@ -32,7 +32,7 @@ function Copyright() {
 const LinkComponent = (props: any) => <RouterLink {...props} />;
 
 interface Props {
-  setIsConnectedInParent: any,
+  setIsConnectedInParent: (isConnected: boolean) => void,
 }
 
 const SignUp: React.FC<Props> = (props) => {

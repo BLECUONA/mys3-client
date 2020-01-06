@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles, Grid } from '@material-ui/core';
 import { Items } from '../utils/localStorageItems';
 import Table from '../components/EnhancedTable';
-import CSS from 'csstype';
+import DropZoneArea from '../components/DropZoneArea';
 
 const useStyles = makeStyles(theme => ({
     body: {
@@ -25,7 +25,8 @@ const Dashboard: React.FC = () => {
 
     return (
         <Grid container className={classes.body}>
-            <h1>{`Welcome to your dashboard ${nickname ?.toUpperCase()}`}</h1>
+            <h1>{`Welcome to your dashboard ${nickname?.toUpperCase()}`}</h1>
+            <DropZoneArea ButtonTextHover="Add files" />
             <Grid container className={classes.table}>
                 <Table />
             </Grid>
