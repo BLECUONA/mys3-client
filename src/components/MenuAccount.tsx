@@ -27,7 +27,7 @@ const LinkComponent = (props: any) => <RouterLink {...props} />;
 
 interface Props {
     logOut: () => void;
-    deleteAccount: () => void; // TODO: voir si passer par props ou pas (déporter la fonction dans un fichier à part traitant l'api?)
+    deleteAccount: () => void;
 }
 
 const MenuAccount: React.FC<Props> = (props) => {
@@ -47,6 +47,7 @@ const MenuAccount: React.FC<Props> = (props) => {
         setOpen(false);
     };
 
+    // TODO
     const deleteAccount = () => {
         console.log("TODO");
     }

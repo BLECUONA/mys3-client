@@ -3,5 +3,7 @@
     "signInText": "Sign in",
     "signUpText": "Sign up",
     "homePageTitle": "Home",
-    "dashboardPageTitle": "Welcome to your dashboard"
+    "dashboardPageTitle": "Welcome to your dashboard",
+    "deleteAccountPopUpErrorTitle": "An error occured",
+    "deleteAccountPopUpErrorMessage": "It is impossible to delete your account"
 }

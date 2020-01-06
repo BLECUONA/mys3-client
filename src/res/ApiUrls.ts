@@ -1,7 +1,8 @@
 export enum apiMys3Pages {
     Base = "/",
     SignUp = "/api/auth/signup/",
-    SignIn = "/api/auth/signin/"
+    SignIn = "/api/auth/signin/",
+    Delete = "/api/user/",
 };
 
 export const apiMys3Domain: string = (

@@ -34,7 +34,7 @@ export const SignIn = async (userToRegister: User, cbRes: ((res: Response) => vo
 }
 
 export const SignUp = async (userToRegister: User, cbRes: ((response: Response) => void), cbErr: (err: Error) => void) => {
-  console.log("Fetchin API ...");
+  console.log("Fetchin API to sign up...");
   const options: RequestInit = {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -53,6 +53,35 @@ export const SignUp = async (userToRegister: User, cbRes: ((response: Response) 
       const jsonRes: Response = await res.json();
 
       if (res.status == 201) {
+        cbRes(jsonRes);
+      }
+      else {
+        throw jsonRes.error
+      }
+    })
+    .catch(err => {
+      cbErr(err);
+    })
+}
+
+export const DeleteAccount = async (userUuid: string, token: string, cbRes: ((response: Response) => void), cbErr: (err: Error) => void) => {
+  console.log("Fetchin API to delete account...");
+  const options: RequestInit = {
+    method: 'DELETE',
+    headers: { 
+      'content-type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    }
+  };
+
+  await fetch(
+    `${apiMys3Domain}${apiMys3Pages.Delete}${userUuid}`,
+    options
+  )
+    .then(async res => {
+      const jsonRes: Response = await res.json();
+
+      if (res.status == 200) {
         cbRes(jsonRes);
       }
       else {

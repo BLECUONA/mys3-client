@@ -2,7 +2,7 @@ export interface User {
     nickname: string,
     email: string,
     password: string,
-    uuid?: number
+    uuid?: string
 }
 
 export interface Response {
