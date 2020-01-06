@@ -19,6 +19,7 @@ const SignIn: React.FC<Props> = (props) => {
   const [nickname, setNickname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [toDashboard, setToDashboard] = useState<boolean>(false);
 
@@ -35,9 +36,11 @@ const SignIn: React.FC<Props> = (props) => {
   }
 
   // API CALL
-  const _fetchApiS3 = () => {
+  const _fetchApiS3 = async () => {
+    setIsFetching(true);
     let userToRegister: User = { nickname, password, email };
-    FetchSignIn(userToRegister, fetchRes, fetchErr);
+    await FetchSignIn(userToRegister, fetchRes, fetchErr);
+    setIsFetching(false)
   } 
 
   const fetchRes = (response: Response) => {
@@ -71,6 +74,7 @@ const SignIn: React.FC<Props> = (props) => {
           nickname={nickname}
           email={email}
           password={password}
+          isFetching={isFetching}
           error={error}
           toDashboard={toDashboard}
           _handleNicknameChange={_handleNicknameChange}

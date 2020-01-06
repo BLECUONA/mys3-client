@@ -6,7 +6,7 @@ import { apiMys3Domain, apiMys3Pages } from "../res/ApiUrls";
 import { User, Response } from "../res/@types/apiMyS3";
 import { Items } from '../res/localStorageItems';
 import SignUpView from './SignUpView'
-import {SignUp as FetchSignUp} from '../services/apiMys3Services';
+import { SignUp as FetchSignUp } from '../services/apiMys3Services';
 
 const LinkComponent = (props: any) => <RouterLink {...props} />;
 
@@ -20,6 +20,7 @@ const SignUp: React.FC<Props> = (props) => {
   const [nickname, setNickname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [toDashboard, setToDashboard] = useState<boolean>(false);
 
@@ -36,10 +37,12 @@ const SignUp: React.FC<Props> = (props) => {
   }
 
   // API CALL
-  const _fetchApiS3 = () => {
+  const _fetchApiS3 = async () => {
+    setIsFetching(true);
     let userToRegister: User = { nickname, password, email };
-    FetchSignUp(userToRegister, fetchRes, fetchErr);
-  } 
+    await FetchSignUp(userToRegister, fetchRes, fetchErr);
+    setIsFetching(false);
+  }
 
   const fetchRes = (response: Response) => {
     const { nickname, uuid } = response.data.user;
@@ -72,6 +75,7 @@ const SignUp: React.FC<Props> = (props) => {
           nickname={nickname}
           email={email}
           password={password}
+          isFetching={isFetching}
           error={error}
           toDashboard={toDashboard}
           _handleNicknameChange={_handleNicknameChange}
