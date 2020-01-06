@@ -19,6 +19,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
+import DropZoneArea from './DropZoneArea';
 
 interface Data {
   calories: number;
@@ -208,11 +209,10 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         </Tooltip>
       ) : (
           <Tooltip title="Add">
-            <IconButton aria-label="add">
-              <AddIcon />
-            </IconButton>
+            <DropZoneArea ButtonTextHover="Add files" />
           </Tooltip>
-        )}    </Toolbar>
+        )}
+    </Toolbar>
   );
 };
 

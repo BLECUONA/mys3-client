@@ -1,17 +1,18 @@
 import React from 'react';
 import { makeStyles, Grid } from '@material-ui/core';
+import dictionary from '../res/dictionary.json';
 
-const Home: React.FC = () => {
+const HomeView: React.FC = () => {
     const classes = useStyles();
 
     return (
         <Grid container className={classes.body}>
-            <h1>HOME</h1>
+            <h1>{dictionary.homePageTitle.toUpperCase()}</h1>
         </Grid>
     );
 }
 
-export default Home;
+export default HomeView;
 
 const useStyles = makeStyles(theme => ({
     body: {
