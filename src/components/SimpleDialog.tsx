@@ -61,6 +61,6 @@ const SimpleDialog: React.FC<Props> = (props) => {
             </DialogActions>
         </Dialog>
     );
-}
+};
 
 export default SimpleDialog;

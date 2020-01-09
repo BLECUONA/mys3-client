@@ -8,8 +8,8 @@ import MenuList from '@material-ui/core/MenuList';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IconButton } from '@material-ui/core';
-import { Link as RouterLink } from "react-router-dom";
-import { Routes } from "../res/Routes"
+import { Link as RouterLink } from 'react-router-dom';
+import { Routes } from '../res/Routes';
 import MenuItemWithDialog from './MenuItemWithDialog';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -47,11 +47,6 @@ const MenuAccount: React.FC<Props> = (props) => {
         setOpen(false);
     };
 
-    // TODO
-    const deleteAccount = () => {
-        console.log("TODO");
-    }
-
     function handleListKeyDown(event: React.KeyboardEvent) {
         if (event.key === 'Tab') {
             event.preventDefault();
@@ -86,14 +81,14 @@ const MenuAccount: React.FC<Props> = (props) => {
                             <Paper>
                                 <ClickAwayListener onClickAway={handleClose}>
                                     <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                        <MenuItemWithDialog textButton={"Delete my account"}
-                                        textTitle={"Delete my account"}
-                                        textDialog={"I confirm my action"}
-                                        textYes={"Yes"}
-                                        textNo={"No"}
+                                        <MenuItemWithDialog textButton={'Delete my account'}
+                                        textTitle={'Delete my account'}
+                                        textDialog={'I confirm my action'}
+                                        textYes={'Yes'}
+                                        textNo={'No'}
                                         actionYes={()=> {
-                                            console.log("YES")
-                                            props.deleteAccount()
+                                            console.log('YES');
+                                            props.deleteAccount();
                                         }}/>
                                         <MenuItem component={LinkComponent}
                                             to={Routes.Home}
@@ -107,6 +102,6 @@ const MenuAccount: React.FC<Props> = (props) => {
             </div>
         </div>
     );
-}
+};
 
 export default MenuAccount;

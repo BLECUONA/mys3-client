@@ -13,7 +13,7 @@ interface Props {
     textTitle: string;
     textDialog: string;
     textYes: string;
-    textNo: string
+    textNo: string;
 }
 
 const MenuItemWithDialog: React.FC<Props> = (props) => {
@@ -30,7 +30,7 @@ const MenuItemWithDialog: React.FC<Props> = (props) => {
     const handleYes = (cb?: (() => void)) => {
         if (cb) cb();
         handleClose();
-    }
+    };
 
     return (
         <div>
@@ -60,6 +60,6 @@ const MenuItemWithDialog: React.FC<Props> = (props) => {
             </Dialog>
         </div>
     );
-}
+};
 
 export default MenuItemWithDialog;

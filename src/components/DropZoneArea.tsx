@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { DropzoneDialog } from 'material-ui-dropzone';
-import { file } from '@babel/types';
 import { Button, Tooltip } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -20,16 +19,16 @@ const DropZoneArea: React.FC<Props> = (props) => {
 
     const _handleOpen = () => {
         setOpen(true);
-    }
+    };
 
     const _handleClose = () => {
         setOpen(false);
-    }
+    };
 
     const _handleSave = (files: File[]) => {
-        setFiles(files)
+        setFiles(files);
         _handleClose();
-    }
+    };
 
     return (
         // {props.ButtonLabel}
@@ -46,6 +45,6 @@ const DropZoneArea: React.FC<Props> = (props) => {
             />
         </>
     );
-}
+};
 
 export default DropZoneArea;

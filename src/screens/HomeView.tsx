@@ -10,12 +10,12 @@ const HomeView: React.FC = () => {
             <h1>{dictionary.homePageTitle.toUpperCase()}</h1>
         </Grid>
     );
-}
+};
 
 export default HomeView;
 
 const useStyles = makeStyles(theme => ({
     body: {
-        justifyContent: "center"
+        justifyContent: 'center'
     },
 }));

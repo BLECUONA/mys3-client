@@ -9,7 +9,7 @@ class TransverseData {
         if (!instance) {
             instance = this;
         }
-        this.token = "";
+        this.token = '';
 
         return instance;
     }
