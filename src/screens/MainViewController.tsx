@@ -3,7 +3,7 @@ import { Items } from '../res/localStorageItems';
 import MainView from './MainView';
 import { DeleteAccount } from '../services/apiMys3Services';
 import { Response } from '../res/@types/apiMyS3';
-import SimpleDialog from '../components/SimpleDialog';
+import DialogNoEntry from '../components/DialogNoEntry';
 import dictionary from '../res/dictionary.json';
 
 const MainViewController: React.FC = () => {
@@ -45,7 +45,7 @@ const MainViewController: React.FC = () => {
   return (
     <>
       {isError &&
-        <SimpleDialog
+        <DialogNoEntry
           textTitle={dictionary.deleteAccountPopUpErrorTitle}
           textMessage={dictionary.deleteAccountPopUpErrorMessage}
           actionClose={() => setIsError(false)}

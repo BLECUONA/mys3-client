@@ -19,40 +19,21 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DropZoneArea from './DropZoneArea';
+import DialogSingleEntry from './DialogSingleEntry';
 
-interface Data {
-  calories: number;
-  carbs: number;
-  fat: number;
+export interface Data {
   name: string;
-  protein: number;
+  type: 'file' | 'folder';
+  size: number;
 }
 
-function createData(
+export function createData(
   name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
+  type: 'file' | 'folder',
+  size: number,
 ): Data {
-  return { name, calories, fat, carbs, protein };
+  return { name, type, size };
 }
-
-const rows = [
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Donut', 452, 25.0, 51, 4.9),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Honeycomb', 408, 3.2, 87, 6.5),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Jelly Bean', 375, 0.0, 94, 0.0),
-  createData('KitKat', 518, 26.0, 65, 7.0),
-  createData('Lollipop', 392, 0.2, 98, 0.0),
-  createData('Marshmallow', 318, 0, 81, 2.0),
-  createData('Nougat', 360, 19.0, 9, 37.0),
-  createData('Oreo', 437, 18.0, 63, 4.0),
-];
 
 function desc<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -91,14 +72,12 @@ interface HeadCell {
 }
 
 const headCells: HeadCell[] = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
-  { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
-  { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
-  { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-  { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
+  { id: 'name', numeric: false, disablePadding: true, label: 'NAME' },
+  { id: 'type', numeric: false, disablePadding: true, label: 'TYPE' },
+  { id: 'size', numeric: true, disablePadding: false, label: 'SIZE (k0)' },
 ];
 
-interface EnhancedTableProps {
+interface EnhancedTableHeadProps {
   classes: ReturnType<typeof useStyles>;
   numSelected: number;
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
@@ -108,7 +87,7 @@ interface EnhancedTableProps {
   rowCount: number;
 }
 
-function EnhancedTableHead(props: EnhancedTableProps) {
+function EnhancedTableHead(props: EnhancedTableHeadProps) {
   const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
   const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
@@ -175,6 +154,9 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
+  addFolder: (res: string) => Promise<string | undefined>;
+  addFile: (newRows: Data[]) => void;
+  deleteFolder: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 /**
@@ -196,20 +178,35 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         </Typography>
       ) : (
           <Typography className={classes.title} variant="h6" id="tableTitle">
-            {/* TODO: change title */}
-            Nutrition
+            Files and folders
         </Typography>
         )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton aria-label="delete">
+          <IconButton
+            aria-label="delete"
+            onClick={props.deleteFolder}
+          >
             <DeleteIcon />
           </IconButton>
         </Tooltip>
       ) : (
-          <Tooltip title="Add">
-            <DropZoneArea ButtonTextHover="Add files" />
-          </Tooltip>
+          <>
+            <DialogSingleEntry
+              ButtonTextHover="Add new folder"
+              textTitle="Add new folder"
+              textMessage="Define its name"
+              actionOk={props.addFolder}
+              textCancel="Cancel"
+              textOk="OK"
+            />
+            <Tooltip title="AddFile">
+              <DropZoneArea
+                ButtonTextHover="Add files"
+                addFile={props.addFile}
+              />
+            </Tooltip>
+          </>
         )}
     </Toolbar>
   );
@@ -219,9 +216,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: '100%',
-    },
-    container: {
-      maxHeight: 200,
     },
     paper: {
       width: '100%',
@@ -247,11 +241,28 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function EnhancedTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof Data>('calories');
+  const [orderBy, setOrderBy] = React.useState<keyof Data>('name');
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rows, setRows] = React.useState<Data[]>([
+    createData('Cupcake', 'file', 305000),
+    createData('Donut', 'file', 452000),
+    createData('Eclair', 'file', 262000),
+    createData('Frozen yoghurt', 'file', 159000),
+    createData('Gingerbread', 'file', 356000),
+    createData('Honeycomb', 'file', 408000),
+    createData('Ice cream sandwich', 'file', 237000),
+    createData('Jelly Bean', 'file', 375000),
+    createData('KitKat', 'file', 518000),
+    createData('Lollipop', 'file', 392000),
+    createData('Marshmallow', 'file', 318000),
+    createData('Nougat', 'file', 360000),
+    createData('Oreo', 'file', 437000),
+  ]);
+  
+  const [isFolderSelected, setIsFolderSelected] = React.useState<Data>();
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
     const isDesc = orderBy === property && order === 'desc';
@@ -268,7 +279,8 @@ export default function EnhancedTable() {
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+  const handleChecked = (event: React.MouseEvent<unknown>, name: string) => {
+    console.log('Checked');
     const selectedIndex = selected.indexOf(name);
     let newSelected: string[] = [];
 
@@ -286,6 +298,17 @@ export default function EnhancedTable() {
     }
 
     setSelected(newSelected);
+    console.log('SELECTED');
+    console.log(selected);
+  };
+
+  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+    console.log('Clicked');
+    const clickedRow: Data | undefined = rows.find((row => row.name === name));
+    if (clickedRow?.type === 'folder') {
+      setIsFolderSelected(clickedRow);
+      // TODO: redirect
+    }
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -305,13 +328,61 @@ export default function EnhancedTable() {
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+  const addFolder = async (name: string) => {
+    console.log('ADD');
+
+    if (rows.find(element => element.name === name)) {
+      const isError = 'Name already exists';
+      return isError;
+    }
+
+    const newFolder = createData(name, 'folder', 0);
+    const copy = rows;
+    setRows([...rows, newFolder]);
+
+    // TODO
+    // await fetch ...
+    // if (err) setRows(copy);
+    // display alert
+  };
+
+  const deleteFolder = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+
+    let newRows = rows;
+
+    selected.forEach(selectedElement => {
+      return newRows = newRows.filter((item) => item.name !== selectedElement);
+    });
+
+    setRows(newRows);
+    setSelected([]);
+
+    // TODO:
+    // await fetch ...
+    // if (err) setRows(rows);
+    // display alert
+  };
+
+  const addFile = async (newRows: Data[]) => {
+    setRows([...rows, ...newRows]);
+
+    // TODO:
+    // await fetch ...
+    // if (err) setRows(rows);
+    // display alert
+  };
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer className={classes.container}>
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          addFolder={addFolder}
+          deleteFolder={deleteFolder}
+          addFile={addFile}
+        />
+        <TableContainer >
           <Table
-            stickyHeader
             className={classes.table}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
@@ -335,8 +406,8 @@ export default function EnhancedTable() {
 
                   return (
                     <TableRow
-                      hover
                       onClick={event => handleClick(event, row.name)}
+                      hover
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -345,6 +416,7 @@ export default function EnhancedTable() {
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
+                          onClick={event => handleChecked(event, row.name)}
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
@@ -352,10 +424,8 @@ export default function EnhancedTable() {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.name}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="left">{row.type}</TableCell>
+                      <TableCell align="right">{row.size}</TableCell>
                     </TableRow>
                   );
                 })}

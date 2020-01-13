@@ -65,7 +65,7 @@ const MainView: React.FC<Props> = (props) => {
         <Route exact path={Routes.SignUp}>
           <Screens.SignUp setIsConnectedInParent={props.updateIsConnectedFromChild} />
         </Route>
-        <Route exact path={Routes.Dashboard}>
+        <Route path={Routes.Dashboard}>
           {props.isConnected ? <Screens.Dashboard /> : <Redirect to={Routes.Home} />}
         </Route>
       </>

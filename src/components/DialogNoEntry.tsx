@@ -16,7 +16,7 @@ interface Props {
     actionClose?: () => void;
 }
 
-const SimpleDialog: React.FC<Props> = (props) => {
+const DialogNoEntry: React.FC<Props> = (props) => {
     const [open, setOpen] = React.useState(true);
 
     const handleValid = () => {
@@ -25,7 +25,6 @@ const SimpleDialog: React.FC<Props> = (props) => {
     };
 
     const handleCancel = () => {
-        if (props.actionOk) props.actionOk();
         handleClose();
     };
 
@@ -63,4 +62,4 @@ const SimpleDialog: React.FC<Props> = (props) => {
     );
 };
 
-export default SimpleDialog;
+export default DialogNoEntry;

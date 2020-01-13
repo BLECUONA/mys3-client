@@ -7,10 +7,12 @@ const Dashboard: React.FC = () => {
 
     useEffect(() => {
         setNickname(localStorage.getItem(Items.nickname));
-      }, []);
-    
+    }, []);
+
     return (
-        <DashboardView nickname={nickname} />
+        <DashboardView
+            nickname={nickname}
+        />
     );
 };
 

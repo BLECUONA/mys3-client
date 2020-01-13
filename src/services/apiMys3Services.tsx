@@ -1,5 +1,5 @@
 import { User, Response } from '../res/@types/apiMyS3';
-import { apiMys3Domain, apiMys3Pages } from '../res/ApiUrls';
+import { apiMys3Domain, apiMys3Pages } from './ApiUrls';
 
 export const SignIn = async (userToRegister: User, cbRes: ((res: Response) => void), cbErr: ((err: Error) => void)) => {
   console.log('Fetching API to sign in ...');
