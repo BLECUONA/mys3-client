@@ -5,7 +5,7 @@ import Table from '../components/EnhancedTable';
 
 const useStyles = makeStyles(theme => ({
     body: {
-        justifyContent: "center"
+        justifyContent: 'center'
     },
     table: {
         marginLeft: theme.spacing(5),
@@ -28,6 +28,6 @@ const Dashboard: React.FC<Props> = (props) => {
             </Grid>
         </Grid>
     );
-}
+};
 
 export default Dashboard;

@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { DropzoneDialog } from 'material-ui-dropzone';
-import { file } from '@babel/types';
 import { Button, Tooltip } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import { Data } from './EnhancedTable';
 
 interface Props {
     ButtonTextHover: string;
+    addFile: (newRows: Data[]) => void;
 }
 
 const DropZoneArea: React.FC<Props> = (props) => {
 
-    const [files, setFiles] = useState<File[]>([]);
     const [open, setOpen] = useState<boolean>(false);
 
     // useEffect(() => {
@@ -20,23 +20,33 @@ const DropZoneArea: React.FC<Props> = (props) => {
 
     const _handleOpen = () => {
         setOpen(true);
-    }
+    };
 
     const _handleClose = () => {
         setOpen(false);
-    }
+    };
 
+    // TODO
     const _handleSave = (files: File[]) => {
-        setFiles(files)
+        const filesToAdd: Data[] = [];
+        files.forEach(element => {
+            console.log('###');
+            console.log(element);
+            filesToAdd.push({name: element.name, type: 'file', size: element.size});
+        });
+        console.log('****');
+        console.log(filesToAdd);
+        props.addFile(filesToAdd);
+        // props.addFile();
         _handleClose();
-    }
+    };
 
     return (
         // {props.ButtonLabel}
         <>
             <Tooltip title={props.ButtonTextHover}>
                 <Button onClick={_handleOpen}>
-                    <AddIcon />
+                    <NoteAddIcon />
                 </Button>
             </Tooltip>
             <DropzoneDialog
@@ -46,6 +56,6 @@ const DropZoneArea: React.FC<Props> = (props) => {
             />
         </>
     );
-}
+};
 
 export default DropZoneArea;

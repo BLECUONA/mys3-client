@@ -3,15 +3,17 @@ import { Items } from '../res/localStorageItems';
 import DashboardView from './DashboardView';
 
 const Dashboard: React.FC = () => {
-    const [nickname, setNickname] = useState<string | null>("");
+    const [nickname, setNickname] = useState<string | null>('');
 
     useEffect(() => {
         setNickname(localStorage.getItem(Items.nickname));
-      })
-    
+    }, []);
+
     return (
-        <DashboardView nickname={nickname} />
+        <DashboardView
+            nickname={nickname}
+        />
     );
-}
+};
 
 export default Dashboard;

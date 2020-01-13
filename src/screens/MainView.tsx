@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Link as RouterLink,
   Redirect
-} from "react-router-dom";
-import { AppBar, Toolbar, Typography, Button, IconButton, ButtonGroup, CssBaseline } from "@material-ui/core";
+} from 'react-router-dom';
+import { AppBar, Toolbar, Typography, Button, IconButton, ButtonGroup, CssBaseline } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import { makeStyles } from '@material-ui/core/styles';
-import MenuAccount from "../components/MenuAccount";
-import { Routes } from "../res/Routes";
-import * as Screens from ".";
+import MenuAccount from '../components/MenuAccount';
+import { Routes } from '../res/Routes';
+import * as Screens from '.';
 import dictionary from '../res/dictionary.json';
 
 const LinkComponent = (props: any) => <RouterLink {...props} />;
@@ -50,8 +50,8 @@ const MainView: React.FC<Props> = (props) => {
           }
         </Toolbar>
       </AppBar>
-    )
-  }
+    );
+  };
 
   const _renderRoutes = () => {
     return (
@@ -65,12 +65,12 @@ const MainView: React.FC<Props> = (props) => {
         <Route exact path={Routes.SignUp}>
           <Screens.SignUp setIsConnectedInParent={props.updateIsConnectedFromChild} />
         </Route>
-        <Route exact path={Routes.Dashboard}>
+        <Route path={Routes.Dashboard}>
           {props.isConnected ? <Screens.Dashboard /> : <Redirect to={Routes.Home} />}
         </Route>
       </>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -80,8 +80,8 @@ const MainView: React.FC<Props> = (props) => {
         {_renderRoutes()}
       </Router>
     </>
-  )
-}
+  );
+};
 
 export default MainView;
 

@@ -9,7 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { CircularProgress, makeStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import commonStyles from "../res/CommonStyles";
+import commonStyles from '../res/CommonStyles';
 import Copyright from '../components/CopyRight';
 import dictionary from '../res/dictionary.json';
 
@@ -18,16 +18,15 @@ const specificStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   container: {
-    minHeight: "100vh",
+    minHeight: '100vh',
   },
   body: {
-    justifyContent: "center",
-    verticalAlign: "center"
+    justifyContent: 'center',
+    verticalAlign: 'center'
   },
 }));
 
 interface Props {
-  setIsConnectedInParent: any;
   nickname: string;
   email: string;
   password: string;
@@ -133,7 +132,7 @@ const SignIn: React.FC<Props> = (props) => {
         </>
       }
     </Container>
-  )
-}
+  );
+};
 
 export default SignIn;

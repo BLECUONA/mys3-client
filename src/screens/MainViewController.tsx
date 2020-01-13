@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Items } from "../res/localStorageItems";
+import React, { useState, useEffect } from 'react';
+import { Items } from '../res/localStorageItems';
 import MainView from './MainView';
 import { DeleteAccount } from '../services/apiMys3Services';
-import { Response } from "../res/@types/apiMyS3";
-import SimpleDialog from "../components/SimpleDialog";
+import { Response } from '../res/@types/apiMyS3';
+import DialogNoEntry from '../components/DialogNoEntry';
 import dictionary from '../res/dictionary.json';
 
 const MainViewController: React.FC = () => {
@@ -13,16 +13,16 @@ const MainViewController: React.FC = () => {
 
   const updateIsConnectedFromChild = (value: boolean) => {
     setIsConnected(value);
-  }
+  };
 
   useEffect(() => {
     setIsConnected(localStorage.getItem(Items.token) != null);
-  })
+  }, []);
 
   const logOut = () => {
     localStorage.clear();
-    setIsConnected(false)
-  }
+    setIsConnected(false);
+  };
 
   const deleteAccount = () => {
     DeleteAccount(
@@ -30,22 +30,22 @@ const MainViewController: React.FC = () => {
       localStorage.getItem(Items.token) as string,
       fetchRes,
       fetchErr);
-  }
+  };
 
   const fetchRes = (response: Response) => {
-    console.log(`User with uuid ${localStorage.getItem(Items.uuid)} successfully deleted`)
+    console.log(`User with uuid ${localStorage.getItem(Items.uuid)} successfully deleted`);
     logOut();
-  }
+  };
 
   const fetchErr = (err: Error) => {
     setIsError(true);
     console.log(`ERR : ${err}`);
-  }
+  };
 
   return (
     <>
       {isError &&
-        <SimpleDialog
+        <DialogNoEntry
           textTitle={dictionary.deleteAccountPopUpErrorTitle}
           textMessage={dictionary.deleteAccountPopUpErrorMessage}
           actionClose={() => setIsError(false)}
@@ -58,7 +58,7 @@ const MainViewController: React.FC = () => {
         updateIsConnectedFromChild={updateIsConnectedFromChild}
       />
     </>
-  )
-}
+  );
+};
 
 export default MainViewController;
